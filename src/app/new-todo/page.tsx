@@ -1,13 +1,30 @@
+'use client';
+
 import Link from 'next/link';
 import { createTodo } from '@/app/new-todo/createTodo';
+import { useRouter } from 'next/navigation';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
+
+const submitAndReturnHome = async (
+  data: FormData,
+  router: AppRouterInstance,
+) => {
+  await createTodo(data);
+  router.push('..');
+};
 
 export default function NewTodo() {
+  const router = useRouter();
+
   return (
     <>
       <header className="flex justify-between items-center mb-4">
         <h1 className="text-2xl">New Todo</h1>
       </header>
-      <form action={createTodo} className="flex gap-2 flex-col">
+      <form
+        action={(data) => submitAndReturnHome(data, router)}
+        className="flex gap-2 flex-col"
+      >
         <input
           type="text"
           name="title"
