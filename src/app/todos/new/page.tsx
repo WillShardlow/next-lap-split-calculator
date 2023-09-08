@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { createTodo } from '@/app/new-todo/createTodo';
+import { createTodo } from '@/app/todos/new/createTodo';
 import { useRouter } from 'next/navigation';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 
@@ -10,7 +10,7 @@ const submitAndReturnHome = async (
   router: AppRouterInstance,
 ) => {
   await createTodo(data);
-  router.push('..');
+  router.push('.');
 };
 
 export default function NewTodo() {
@@ -32,7 +32,7 @@ export default function NewTodo() {
         />
         <div className="flex gap-1 justify-end">
           <Link
-            href=".."
+            href="."
             className="border border-slate-300 text-slate-300 px-2 py-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none"
           >
             Cancel
