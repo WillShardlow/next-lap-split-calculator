@@ -17,7 +17,6 @@ export default function LapSplitCalculator() {
 
   const onSubmit: SubmitHandler<GoalPerformance> = (data) =>
     setLapPace(calculateLapSplit(data));
-  // console.log(calculateLapSplit(data));
 
   return (
     <div className="flex-col items-center justify-center mx-auto max-w-2xl">
