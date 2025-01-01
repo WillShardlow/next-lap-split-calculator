@@ -5,6 +5,10 @@ import { TodoItem } from '@/components/TodoItem';
 const toggleTodo = async (id: string, complete: boolean) => {
   'use server';
 
+  if (!prisma) {
+    throw new Error('Prisma is disabled');
+  }
+
   await prisma.todo.update({
     where: {
       id,
@@ -16,6 +20,18 @@ const toggleTodo = async (id: string, complete: boolean) => {
 };
 
 export default async function Todos() {
+  if (!prisma) {
+    return (
+      <div className="text-center mt-8">
+        <h1 className="text-2xl">Todos feature is disabled</h1>
+        <p>
+          Enable the TODOS feature by setting IS_PRISMA_ENABLED=true in your
+          environment variables.
+        </p>
+      </div>
+    );
+  }
+
   const todos = await prisma.todo.findMany();
 
   return (
@@ -23,7 +39,7 @@ export default async function Todos() {
       <header className="flex justify-between items-center mb-4">
         <h1 className="text-2xl">Todos</h1>
         <Link
-          className="border border-slate-300 text-slate-300px-2 py-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none"
+          className="border border-slate-300 text-slate-300 px-2 py-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none"
           href="todos/new"
         >
           New
