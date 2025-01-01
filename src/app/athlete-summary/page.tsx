@@ -1,6 +1,6 @@
 'use client';
 
-import { getAthlete } from '@/integrations/strava';
+import { getAthleteInformation } from '@/integrations/strava';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -13,7 +13,7 @@ export default function AthleteSummary() {
   useEffect(() => {
     const fetchData = async () => {
       if (code) {
-        const athleteInfo = await getAthlete(code);
+        const athleteInfo = await getAthleteInformation(code);
         setName(athleteInfo.firstname);
       }
     };

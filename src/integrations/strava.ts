@@ -41,7 +41,7 @@ type Shoe = {
   distance: number;
 };
 
-export const getAthleteInformation =
+export const getDeveloperAthleteInformation =
   async (): Promise<AthleteInformationResponse> => {
     const options: RequestInit = {
       method: 'GET',
@@ -55,17 +55,6 @@ export const getAthleteInformation =
 
     return (await response.json()) as AthleteInformationResponse;
   };
-
-export const authorise = async () => {
-  const options: RequestInit = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  await fetch(` https://www.strava.com/oauth/authorize`, options);
-};
 
 const clientId = '116164';
 const clientSecret = '09ffbead0aa6d8107335a9b21a200365ea97ce0e';
@@ -99,12 +88,10 @@ export const getAccessAndRefreshToken = async (code: string) => {
     options,
   );
 
-  console.log('access token', response);
-
   return (await response.json()) as accessAndRefreshResponse;
 };
 
-export const getAthlete = async (code: string) => {
+export const getAthleteInformation = async (code: string) => {
   const options: RequestInit = {
     method: 'GET',
     headers: {
@@ -116,15 +103,5 @@ export const getAthlete = async (code: string) => {
 
   const response = await fetch(callAthlete + accessToken, options);
 
-  console.log('request', callAthlete + accessToken);
-  console.log('athlete response', response);
-
-  try {
-    const responseBody = await response.json(); // Parse the response body as JSON
-    console.log('athlete body', responseBody);
-    return responseBody as AthleteInformationResponse;
-  } catch (error) {
-    console.error('Error parsing response body:', error);
-    throw error; // Propagate the error
-  }
+  return (await response.json()) as AthleteInformationResponse;
 };
